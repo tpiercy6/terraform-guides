@@ -14,6 +14,7 @@ module "aws-functions" {
   source = "./aws-functions/aws-functions.sentinel"
 }
 
+/*
 policy "enforce-mandatory-tags" {
   source = "./enforce-mandatory-tags.sentinel"
   enforcement_level = "advisory"
@@ -73,12 +74,15 @@ policy "restrict-db-instance-engines" {
   source = "./restrict-db-instance-engines.sentinel"
   enforcement_level = "advisory"
 }
+  
+*/
 
 policy "restrict-ec2-instance-type" {
   source = "./restrict-ec2-instance-type.sentinel"
   enforcement_level = "hard-mandatory"
 }
 
+/*
 policy "restrict-egress-sg-rule-cidr-blocks" {
   source = "./restrict-egress-sg-rule-cidr-blocks.sentinel"
   enforcement_level = "advisory"
@@ -133,3 +137,5 @@ policy "validate-providers-from-desired-regions" {
   source = "./validate-providers-from-desired-regions.sentinel"
   enforcement_level = "advisory"
 }
+  
+*/
