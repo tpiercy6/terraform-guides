@@ -2,8 +2,8 @@ import "tfrun"
 import "tfconfig"
 import "strings"
 
-nonsensitive_tf_run_variables = filter tfrun.variables as var, value { value.sensitive is false }
-print(keys(nonsensitive_tfrun_variables))
+sensitive_tf_run_variables = filter tfrun.variables as var, value { value.sensitive is false }
+print(keys(sensitive_tfrun_variables))
 
 get_output_references = func() {
     output_references = []
@@ -21,7 +21,7 @@ get_output_references = func() {
 check_output_variables_by_sensitivity = func(output_variables) {
     result = false
   for output_variables as output_variable {
-        if output_variable in keys(nonsensitive_tfrun_variables) == "AWS_SECRET_ACCESS_KEY" {
+        if output_variable in keys(sensitive_tfrun_variables) == "AWS_SECRET_ACCESS_KEY" {
             return false
         } else {
             result = true
