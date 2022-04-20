@@ -35,9 +35,9 @@ check_output_variables_by_sensitivity = func(output_variables) {
 }
 
 deny_secure_output_variables = rule {
-    check_output_variables_by_sensitivity(get_output_references("AWS_SECRET_ACCESS_KEY"))
+    check_output_variables_by_sensitivity(get_output_references())
 }
 
 main = rule {
-    output.var.sensitive
+    deny_secure_output_variables
 }
