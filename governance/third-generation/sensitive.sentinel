@@ -17,7 +17,6 @@ get_output_references = func() {
     }
     return output_references
 }
-
 check_output_variables_by_sensitivity = func(output_variables) {
     result = false
   for output_variables as output_variable {
