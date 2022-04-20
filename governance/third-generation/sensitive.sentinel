@@ -1,42 +1,8 @@
 import "tfrun"
 import "tfconfig"
 import "strings"
-secret_key = "AWS_SECRET_ACCESS_KEY"
-sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is false }
-print(keys(sensitive_tfrun_variables))
-
-get_output_references = func() {
-    output_references = []
-
-    for values(tfconfig.outputs) as output {
-        references = filter output.references as value { value contains "SECRET" }
-
-        for references as reference {
-            append(output_references, strings.split(reference, ".")[-1])
-        }
-    }
-    return output_references
+output "id" {
+  sensitive = true
+  value     = "AWS_SECRET_ACCESS_KEY"
 }
-check_output_variables_by_sensitivity = func(output_variables) {
-    result = false
-  for output_variables as output_variable {
-        if secret_key in keys(sensitive_tfrun_variables) {
-            print(
-                "Variable",
-                output_variable,
-                "is configured as a nonsensitive variable and cannot be exposed as a Terraform output")
-            return result
-        } else {
-            result = true
-        }
-    }
-    return result
-}
-
-deny_secure_output_variables = rule {
-    check_output_variables_by_sensitivity(get_output_references())
-}
-
-main = rule {
-    deny_secure_output_variables
-}
+main = rule { subject.outputs.id.sensitive }
