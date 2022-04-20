@@ -2,11 +2,11 @@ import "tfrun"
 import "tfconfig"
 import "strings"
 
-sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is true }
+sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is false }
 print(keys(sensitive_tfrun_variables))
 
-get_output_references = func() {
-    output_references = []
+
+    output_references = ["AWS_SECRET_ACCESS_KEY"]
 
     for values(tfconfig.outputs) as output {
         references = filter output.references as value { value contains "var" }
@@ -24,7 +24,7 @@ check_output_variables_by_sensitivity = func(output_variables) {
             print(
                 "Variable",
                 output_variable,
-                "is configured as a sensitive variable and cannot be exposed as a Terraform output")
+                "is configured as a nonsensitive variable and cannot be exposed as a Terraform output")
             return result
         } else {
             result = true
