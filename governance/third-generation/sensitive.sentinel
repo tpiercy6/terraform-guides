@@ -5,7 +5,7 @@ import "strings"
 sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is false }
 print(keys(sensitive_tfrun_variables))
 
-get_output_references = func() {
+func() {
     output_references = ["AWS_SECRET_ACCESS_KEY"]
 
     for values(tfconfig.outputs) as output {
