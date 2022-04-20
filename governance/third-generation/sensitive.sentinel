@@ -39,5 +39,5 @@ deny_secure_output_variables = rule {
 }
 
 main = rule {
-    outputs.var.sensitive
+    output.var.sensitive
 }
