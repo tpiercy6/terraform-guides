@@ -2,7 +2,7 @@ import "tfrun"
 import "tfconfig"
 import "strings"
 secret_key = "AWS_SECRET_ACCESS_KEY"
-sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is false }
+sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is true }
 print(keys(sensitive_tfrun_variables))
 
 
