@@ -34,7 +34,7 @@ check_output_variables_by_sensitivity = func(output_variables) {
 }
 
 deny_secure_output_variables = rule {
-    check_output_variables_by_sensitivity(get_output_references())
+    check_output_variables_by_sensitivity(output_references)
 }
 
 main = rule {
