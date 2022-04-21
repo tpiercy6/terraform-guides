@@ -1,7 +1,7 @@
 import "tfrun" as tfrun
 
 //provide list of variables that needs be be marked as sensitive in the workspace 
-sensitive_variables = ["AWS_SECRET_ACCESS_KEY", "AWS_ACCESS_KEY_ID"]
+sensitive_variables = ["AWS_SECRET_ACCESS_KEY", "AWS_ACCESS_KEY_ID", "TFE_TOKEN"]
 
 variables = tfrun.variables
 
