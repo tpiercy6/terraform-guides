@@ -1,43 +1,19 @@
-import "tfrun"
-import "tfconfig"
-import "strings"
+import "tfrun" as tfrun
 
-sensitive_tfrun_variables = filter tfrun.variables as var, value { value.sensitive is true }
-print(keys(sensitive_tfrun_variables))
+//provide list of variables that needs be be marked as sensitive in the workspace 
+sensitive_variables = ["AWS_SECRET_ACCESS_KEY", "AWS_SESSION_TOKEN"]
 
-get_output_references = func() {
-    output_references = []
+variables = tfrun.variables
 
-    for values(tfconfig.outputs) as output {
-        references = filter output.references as value { value contains "var" }
-
-        for references as reference {
-            append(output_references, strings.split(reference, ".")[-1])
-        }
+violation = 0
+for sensitive_variables as value {
+    match = variables[value].sensitive else true //to recover from undefined variable https://docs.hashicorp.com/sentinel/language/undefined#else-expressions
+    if match is false {
+        violation += 1
+        print("Sensitive variable " + value + " is not marked as sensitive")
     }
-    return output_references
-}
-
-check_output_variables_by_sensitivity = func(output_variables) {
-    result = false
-  for output_variables as output_variable {
-        if output_variable in keys(sensitive_tfrun_variables) {
-            print(
-                "Variable",
-                output_variable,
-                "is configured as a sensitive variable and cannot be exposed as a Terraform output")
-            return result
-        } else {
-            result = true
-        }
-    }
-    return result
-}
-
-deny_secure_output_variables = rule {
-    check_output_variables_by_sensitivity(get_output_references())
 }
 
 main = rule {
-    deny_secure_output_variables
+    violation is 0
 }
