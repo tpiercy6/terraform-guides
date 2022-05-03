@@ -79,7 +79,7 @@ policy "restrict-db-instance-engines" {
 
 policy "restrict-ec2-instance-type" {
   source = "./restrict-ec2-instance-type.sentinel"
-  enforcement_level = "soft-mandatory"
+  enforcement_level = "hard-mandatory"
 }
 
 /*
@@ -97,22 +97,23 @@ policy "restrict-iam-policy-actions" {
   source = "./restrict-iam-policy-actions.sentinel"
   enforcement_level = "advisory"
 }
+  */
 
 policy "restrict-ingress-sg-rule-cidr-blocks" {
   source = "./restrict-ingress-sg-rule-cidr-blocks.sentinel"
-  enforcement_level = "advisory"
+  enforcement_level = "soft-mandatory"
 }
 
 policy "restrict-ingress-sg-rule-rdp" {
   source = "./restrict-ingress-sg-rule-rdp.sentinel"
-  enforcement_level = "advisory"
+  enforcement_level = "soft-mandatory"
 }
 
 policy "restrict-ingress-sg-rule-ssh" {
   source = "./restrict-ingress-sg-rule-ssh.sentinel"
   enforcement_level = "advisory"
 }
-
+/*
 policy "restrict-launch-configuration-instance-type" {
   source = "./restrict-launch-configuration-instance-type.sentinel"
   enforcement_level = "advisory"
@@ -137,5 +138,5 @@ policy "validate-providers-from-desired-regions" {
   source = "./validate-providers-from-desired-regions.sentinel"
   enforcement_level = "advisory"
 }
-  
-*/
+  */
+
